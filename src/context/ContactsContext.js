@@ -7,12 +7,8 @@ export const contactsContext = React.createContext();
 
 
 const INIT_STATE = {
-    contactsToEdit:{
-        name:'',
-        surName:'',
-        phone:''
-    },
-    contacts:[]
+    contacts:[],
+    contactsToEdit:null
 
 }
 

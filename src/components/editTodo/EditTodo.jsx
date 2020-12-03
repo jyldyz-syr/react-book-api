@@ -7,37 +7,32 @@ const EditTodo = (props) => {
 
     
     const { contactsToEdit, saveContacts } = useContext(contactsContext);
-    console.log(contactsToEdit);
-    const [newEditItem1, setNewEditItem1] = useState(contactsToEdit.name);
-    const [newEditItem2, setNewEditItem2] = useState(contactsToEdit.surName);
-    const [newEditItem3, setNewEditItem3] = useState(contactsToEdit.phone);
-    const [newEditItem4, setNewEditItem4] = useState(contactsToEdit.id);
-    
-    useEffect (() => {
-        setNewEditItem1(contactsToEdit.name)
-        setNewEditItem2(contactsToEdit.surName)
-        setNewEditItem3(contactsToEdit.phone)
-        setNewEditItem4(contactsToEdit.id)
+    const [editItem, setEditItem ] = useState(contactsToEdit)
 
+
+
+    useEffect (() => {
+      setEditItem(contactsToEdit)
     }, [contactsToEdit])
 
-
-    let name=newEditItem1
-    let surName = newEditItem2
-    let phone=newEditItem3
-    let id=newEditItem4
-
+    function handle(e){
+        let obj={
+            ...editItem, 
+            [e.target.name]: e.target.value
+        }
+        setEditItem(obj)
+    }
 
 
     return (
         <div>
-            {contactsToEdit? 
+            {editItem? 
             <> 
-                <input  value={newEditItem1} onChange= {(e)=> setNewEditItem1(e.target.value)} />
-                <input  value={newEditItem2} onChange= {(e)=> setNewEditItem2(e.target.value)} />
-                <input value={newEditItem3}  onChange= {(e)=> setNewEditItem3(e.target.value)}/>
+                <input name="name"  onChange = {handle}  value={editItem.name}/>
+                <input name="surName"  onChange = {handle}  value={editItem.surName}/>
+                <input name="phone"  onChange = {handle} value={editItem.phone}/>
 
-                <button onClick={() => saveContacts({name, surName, phone, id}, props.history)}>Save</button>
+                <button onClick={() => saveContacts(editItem, props.history)}>Save</button>
             </>
             : <h1>Loading</h1>}
         </div>
